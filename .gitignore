@@ -1,0 +1,47 @@
+# IDEとエディタ
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 環境変数
+.env
+.env.local
+.env.*.local
+
+# ログファイル
+*.log
+error_log
+access_log
+
+# 一時ファイル
+*.tmp
+*.temp
+*.cache
+
+# PHPデバッグファイル
+test_db.php
+check_mysql.php
+clear_cache.php
+
+# ドキュメント（プライベート）
+CLAUDE.md
+docs/
+
+# Chrome拡張機能の生成ファイル
+x-fab-chrome-extension/create_icons.php
+
+# デプロイ関連
+deploy_to_xampp.sh
+
+# XAMPPログ
+/Applications/XAMPP/
+
+# その他
+*.bak
+*.orig

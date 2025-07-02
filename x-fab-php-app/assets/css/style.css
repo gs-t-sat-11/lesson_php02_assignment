@@ -1,0 +1,396 @@
+/* リセットとベーススタイル */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f5f8fa;
+    color: #14171a;
+    line-height: 1.5;
+}
+
+/* コンテナ */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ヘッダー */
+.header {
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.header h1 {
+    font-size: 24px;
+    color: #1d9bf0;
+}
+
+/* 検索とフィルタ */
+.controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    padding: 8px 12px;
+    border: 1px solid #e1e8ed;
+    border-radius: 20px;
+    width: 300px;
+    font-size: 14px;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #1d9bf0;
+}
+
+.sort-select {
+    padding: 8px 12px;
+    border: 1px solid #e1e8ed;
+    border-radius: 20px;
+    background-color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.search-button {
+    padding: 8px 20px;
+    background-color: #1d9bf0;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.search-button:hover {
+    background-color: #1a8cd8;
+}
+
+/* メインコンテンツ */
+.main-content {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/* ローディング */
+.loading {
+    text-align: center;
+    padding: 50px;
+    font-size: 18px;
+    color: #657786;
+}
+
+/* エラーメッセージ */
+.error-message {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+/* フィードリスト */
+.feeds-container {
+    display: grid;
+    gap: 20px;
+}
+
+/* フィードカード */
+.feed-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s;
+}
+
+.feed-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.feed-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.user-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: 12px;
+    object-fit: cover;
+}
+
+.user-info {
+    flex: 1;
+}
+
+.user-name {
+    font-weight: bold;
+    color: #14171a;
+    text-decoration: none;
+}
+
+.user-name:hover {
+    text-decoration: underline;
+}
+
+.post-date {
+    font-size: 14px;
+    color: #657786;
+}
+
+.feed-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.delete-button {
+    padding: 6px 12px;
+    background-color: #e0245e;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.delete-button:hover {
+    background-color: #c91e52;
+}
+
+.feed-link {
+    padding: 6px 12px;
+    background-color: #1d9bf0;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 12px;
+    transition: background-color 0.2s;
+}
+
+.feed-link:hover {
+    background-color: #1a8cd8;
+}
+
+/* 投稿内容 */
+.post-content {
+    margin-bottom: 15px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.post-content a {
+    color: #1d9bf0;
+    text-decoration: none;
+}
+
+.post-content a:hover {
+    text-decoration: underline;
+}
+
+/* メディア */
+.media-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.media-item {
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #f5f8fa;
+    position: relative;
+    aspect-ratio: 16 / 9; /* アスペクト比を固定 */
+}
+
+.media-item img,
+.media-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* coverからcontainに変更 */
+    background-color: #000; /* 余白部分の背景色 */
+}
+
+/* 画像が1枚の場合は大きく表示 */
+.media-container:has(.media-item:only-child) {
+    grid-template-columns: 1fr;
+    max-width: 600px;
+}
+
+.media-container:has(.media-item:only-child) .media-item {
+    aspect-ratio: auto; /* 単一画像の場合はアスペクト比を自動に */
+    max-height: 400px;
+}
+
+/* 画像が2枚の場合 */
+.media-container:has(.media-item:nth-child(2):last-child) {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* 画像が3枚以上の場合 */
+@media (min-width: 768px) {
+    .media-container {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+/* 引用ツイート */
+.quoted-tweet {
+    border: 1px solid #e1e8ed;
+    border-radius: 12px;
+    padding: 12px;
+    margin-top: 15px;
+    background-color: #f9fafb;
+}
+
+.quoted-user {
+    font-weight: bold;
+    color: #14171a;
+    margin-bottom: 5px;
+}
+
+.quoted-content {
+    font-size: 14px;
+    color: #536471;
+}
+
+/* ページネーション */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 40px 0;
+}
+
+.pagination button,
+.pagination span {
+    padding: 8px 16px;
+    border: 1px solid #e1e8ed;
+    background-color: white;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.pagination button:hover:not(:disabled) {
+    background-color: #f5f8fa;
+    border-color: #1d9bf0;
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination .current-page {
+    background-color: #1d9bf0;
+    color: white;
+    border-color: #1d9bf0;
+}
+
+/* 空の状態 */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-state h2 {
+    font-size: 24px;
+    color: #14171a;
+    margin-bottom: 10px;
+}
+
+.empty-state p {
+    font-size: 16px;
+    color: #657786;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .controls {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .search-box input {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .feed-header {
+        flex-wrap: wrap;
+    }
+    
+    .user-icon {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .media-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .pagination {
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    .header h1 {
+        font-size: 20px;
+    }
+    
+    .feed-card {
+        padding: 15px;
+    }
+    
+    .controls {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .search-box,
+    .sort-select,
+    .search-button {
+        width: 100%;
+    }
+}

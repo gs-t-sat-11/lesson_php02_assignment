@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(php:*)",
+      "Bash(chmod:*)",
+      "Bash(./deploy_to_xampp.sh:*)",
+      "Bash(cp:*)",
+      "Bash(curl:*)"
+    ],
+    "deny": []
+  }
+}

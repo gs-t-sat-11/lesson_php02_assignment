@@ -1,10 +1,47 @@
+# ① 課題名
+
+X のポストを保存するアプリ
+
+## ② 課題内容（どんな作品か）
+
+Chrome Extension で X ポストに保存ボタンを表示し、押下するとサーバの DB に保存されるアプリ。
+X だと自分のいいねしたポスト内で検索などをすることができないため、保存しておくことで検索ができるようにするそうてい(検索機能はまだ未実装)
+
+## ③ アプリのデプロイ URL
+
+- https://x-fab-php-app-riicjqaxya-an.a.run.app/feeds
+- デバッグ用の投稿画面: https://x-fab-php-app-riicjqaxya-an.a.run.app/api/debug.php
+- 保存ボタンは/x-fab-chrome-extension を Chrome 拡張としてインストールする必要あり
+
+### Chrome 拡張
+
+![SaveButton](SaveButton.png)
+
+### 保存したフィード一覧ページ
+
+![FeedPage](FeedPage.png)
+
+## ④ アプリのログイン用 ID または Password（ある場合）
+
+- なし
+
+## ⑤ 工夫した点・こだわった点
+
+- Cloud Run、Cloud SQL、Docker を使用。
+
+## ⑥ 難しかった点・次回トライしたいこと（又は機能）
+
+- Vibe Coding してしまったので、ちゃんとソースを読む
+
+## ⑦ フリー項目（感想、シェアしたいこと等なんでも）
+
 # X Feed Saver
 
-X（旧Twitter）のフィードを保存・管理するためのChrome拡張機能とPHPアプリケーションです。
+X（旧 Twitter）のフィードを保存・管理するための Chrome 拡張機能と PHP アプリケーションです。
 
 ## 機能
 
-- Chrome拡張機能でXのフィードに「保存」ボタンを追加
+- Chrome 拡張機能で X のフィードに「保存」ボタンを追加
 - フィード情報（URL、ユーザー名、投稿内容、画像、動画、引用ツイート）をデータベースに保存
 - 保存したフィードの閲覧・検索・削除機能
 - レスポンシブデザイン対応
@@ -21,7 +58,7 @@ X（旧Twitter）のフィードを保存・管理するためのChrome拡張機
 
 #### 自動配置スクリプトを使用する場合（Mac）
 
-配置スクリプトを使用すると、自動的にXAMPPに必要なファイルがコピーされます：
+配置スクリプトを使用すると、自動的に XAMPP に必要なファイルがコピーされます：
 
 ```bash
 # プロジェクトディレクトリに移動
@@ -32,14 +69,15 @@ cd /path/to/lesson_php02_assignment
 ```
 
 スクリプトが以下を自動的に実行します：
-- XAMPPのインストール確認
+
+- XAMPP のインストール確認
 - ファイルのコピー
 - パーミッションの設定
-- .envファイルの作成
+- .env ファイルの作成
 
 #### 手動で配置する場合
 
-XAMPPのhtdocsディレクトリに`x-fab-php-app`フォルダを配置します：
+XAMPP の htdocs ディレクトリに`x-fab-php-app`フォルダを配置します：
 
 ```bash
 # Windowsの場合
@@ -51,10 +89,10 @@ C:\xampp\htdocs\x-fab-php-app
 
 ### 2. データベースのセットアップ
 
-1. XAMPPを起動し、ApacheとMySQLを開始
+1. XAMPP を起動し、Apache と MySQL を開始
 2. ブラウザで http://localhost/phpmyadmin にアクセス
 3. 左サイドバーで「新規作成」をクリックするか、トップメニューの「SQL」タブを開く
-4. 以下のSQLを実行（`x-fab-php-app/setup.sql`の内容と同じ）：
+4. 以下の SQL を実行（`x-fab-php-app/setup.sql`の内容と同じ）：
 
 ```sql
 CREATE DATABASE IF NOT EXISTS x_fab_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -92,11 +130,13 @@ API_URL=http://localhost/x-fab-php-app/api
 ### 4. 動作確認
 
 1. データベース接続テスト：
+
    ```
    http://localhost/x-fab-php-app/test_db.php
    ```
 
-2. APIデバッグページ：
+2. API デバッグページ：
+
    ```
    http://localhost/x-fab-php-app/api/debug.php
    ```
@@ -106,10 +146,10 @@ API_URL=http://localhost/x-fab-php-app/api
    http://localhost/x-fab-php-app/feeds
    ```
 
-### 5. Chrome拡張機能のインストール
+### 5. Chrome 拡張機能のインストール
 
-1. Chromeで `chrome://extensions/` を開く
-2. 右上の「デベロッパーモード」をONにする
+1. Chrome で `chrome://extensions/` を開く
+2. 右上の「デベロッパーモード」を ON にする
 3. 「パッケージ化されていない拡張機能を読み込む」をクリック
 4. `x-fab-chrome-extension`フォルダを選択
 5. 拡張機能が有効になったことを確認
@@ -152,61 +192,63 @@ lesson_php02_assignment/
 
 ### データベース接続エラー
 
-- XAMPPのMySQLが起動しているか確認
+- XAMPP の MySQL が起動しているか確認
 - `.env`ファイルの設定が正しいか確認
 - `test_db.php`でエラー詳細を確認
 
-### phpMyAdminでのエラー
+### phpMyAdmin でのエラー
 
 #### Error: #1046 データベースが選択されていません
 
 このエラーが出た場合は、以下の手順で解決：
 
-1. phpMyAdminのトップページから「SQL」タブを開く
+1. phpMyAdmin のトップページから「SQL」タブを開く
 2. `setup.sql`の内容を全てコピー＆ペースト（`USE x_fab_db;`を含む）
 3. 実行
 
 または、詳細な手順は `docs/phpmyadmin_setup_guide.md` を参照してください。
 
-### Chrome拡張機能が動作しない
+### Chrome 拡張機能が動作しない
 
-- デベロッパーモードがONになっているか確認
+- デベロッパーモードが ON になっているか確認
 - 拡張機能のエラーログを確認（拡張機能ページの「エラー」ボタン）
 - ページをリロードして再試行
 
-### APIエラー
+### API エラー
 
-- `/api/debug.php`でAPIの動作を確認
+- `/api/debug.php`で API の動作を確認
 - ブラウザの開発者ツールでネットワークエラーを確認
-- PHPのエラーログを確認
+- PHP のエラーログを確認
 
 ## ファイル整理について
 
 ### デプロイ関連ファイル
 
-本プロジェクトでは、Cloud Runへのデプロイ過程で複数の試行錯誤を行いました。最終的に使用するファイルのみを残し、以下のファイルを整理しました：
+本プロジェクトでは、Cloud Run へのデプロイ過程で複数の試行錯誤を行いました。最終的に使用するファイルのみを残し、以下のファイルを整理しました：
 
 #### 削除したファイル：
+
 - `Dockerfile.cloudrun`, `Dockerfile.final`, `Dockerfile.gcp`, `Dockerfile.production`, `Dockerfile.simple` → `Dockerfile`に統合
 - `x-fab-php-app/deploy-final.sh`, `x-fab-php-app/start.sh` → 不要なスクリプト
 
 #### 現在のファイル構成：
-- `x-fab-php-app/Dockerfile` - Cloud Run用の最終的なDockerfile
-- `deploy_with_existing_sql.sh` - 既存のCloud SQLインスタンスを使用するデプロイスクリプト
-- `.env.deploy.example` - デプロイ設定のテンプレート
-- `.env.deploy` - 実際のデプロイ設定（.gitignoreで管理）
 
-## Cloud Run + Cloud SQLへのデプロイ
+- `x-fab-php-app/Dockerfile` - Cloud Run 用の最終的な Dockerfile
+- `deploy_with_existing_sql.sh` - 既存の Cloud SQL インスタンスを使用するデプロイスクリプト
+- `.env.deploy.example` - デプロイ設定のテンプレート
+- `.env.deploy` - 実際のデプロイ設定（.gitignore で管理）
+
+## Cloud Run + Cloud SQL へのデプロイ
 
 ### 前提条件
 
-- Google Cloud SDKがインストール済み
-- Google Cloudプロジェクトが作成済み
+- Google Cloud SDK がインストール済み
+- Google Cloud プロジェクトが作成済み
 - 請求先アカウントが設定済み
 
 ### デプロイ手順
 
-#### 1. Google Cloud SDKのセットアップ
+#### 1. Google Cloud SDK のセットアップ
 
 ```bash
 # Macの場合
@@ -218,7 +260,7 @@ gcloud auth login
 
 #### 2. デプロイ手順
 
-##### 既存のCloud SQLインスタンスを使用する場合
+##### 既存の Cloud SQL インスタンスを使用する場合
 
 ```bash
 # 1. 環境変数ファイルの準備
@@ -254,20 +296,21 @@ chmod +x cloud_sql_proxy
 mysql -h 127.0.0.1 -P 3307 -u x_fab_user -p x_fab_db < x-fab-php-app/setup.sql
 ```
 
-#### 4. Chrome拡張機能の更新
+#### 4. Chrome 拡張機能の更新
 
-本番環境用のURLは既に設定済みです：
-- **現在の本番環境URL**: `https://x-fab-php-app-riicjqaxya-an.a.run.app`
-- **content.js**: 本番環境URLが設定されています
-- **content.prod.js**: 本番環境専用の設定ファイル（.gitignoreで管理）
+本番環境用の URL は既に設定済みです：
 
-新しいデプロイを行った場合は、表示されたURLでcontent.jsを更新してください。
+- **現在の本番環境 URL**: `https://x-fab-php-app-riicjqaxya-an.a.run.app`
+- **content.js**: 本番環境 URL が設定されています
+- **content.prod.js**: 本番環境専用の設定ファイル（.gitignore で管理）
+
+新しいデプロイを行った場合は、表示された URL で content.js を更新してください。
 
 ### デプロイ後の確認
 
 - アプリケーション: `https://YOUR-CLOUD-RUN-URL`
 - フィード一覧: `https://YOUR-CLOUD-RUN-URL/feeds`
-- APIデバッグ: `https://YOUR-CLOUD-RUN-URL/api/debug.php`
+- API デバッグ: `https://YOUR-CLOUD-RUN-URL/api/debug.php`
 
 ### 料金の目安
 

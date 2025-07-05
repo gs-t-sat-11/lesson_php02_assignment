@@ -1,0 +1,36 @@
+runtime: custom
+env: flex
+
+# Cloud SQL接続設定
+beta_settings:
+  cloud_sql_instances: YOUR_PROJECT_ID:REGION:INSTANCE_NAME
+
+# 環境変数
+env_variables:
+  DB_HOST: /cloudsql/YOUR_PROJECT_ID:REGION:INSTANCE_NAME
+  DB_NAME: x_fab_db
+  DB_USER: x_fab_user
+  DB_PASS: YOUR_SECURE_PASSWORD
+  DB_PORT: 3306
+  ENV: production
+
+# リソース設定
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
+
+# 自動スケーリング
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 10
+  cool_down_period_sec: 180
+  cpu_utilization:
+    target_utilization: 0.6
+
+# ヘルスチェック
+liveness_check:
+  path: "/api/health.php"
+
+readiness_check:
+  path: "/api/health.php"

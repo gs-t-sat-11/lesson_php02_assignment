@@ -178,9 +178,87 @@ lesson_php02_assignment/
 - ブラウザの開発者ツールでネットワークエラーを確認
 - PHPのエラーログを確認
 
+## Cloud Run + Cloud SQLへのデプロイ
+
+### 前提条件
+
+- Google Cloud SDKがインストール済み
+- Google Cloudプロジェクトが作成済み
+- 請求先アカウントが設定済み
+
+### デプロイ手順
+
+#### 1. Google Cloud SDKのセットアップ
+
+```bash
+# Macの場合
+brew install --cask google-cloud-sdk
+
+# ログイン
+gcloud auth login
+```
+
+#### 2. デプロイスクリプトの実行
+
+```bash
+# プロジェクトIDを指定して実行
+./deploy.sh YOUR_PROJECT_ID
+
+# パスワードを聞かれたら、安全なパスワードを入力
+```
+
+#### 3. データベーステーブルの作成
+
+スクリプトの指示に従い、別のターミナルで：
+
+```bash
+# Cloud SQL Proxyのダウンロード（初回のみ）
+curl -o cloud_sql_proxy https://dl.google.com/cloudsql/cloud_sql_proxy.darwin.amd64
+chmod +x cloud_sql_proxy
+
+# Proxyの起動（CONNECTION_NAMEはスクリプトが表示）
+./cloud_sql_proxy -instances=CONNECTION_NAME=tcp:3307
+
+# 別のターミナルでSQLを実行
+mysql -h 127.0.0.1 -P 3307 -u x_fab_user -p x_fab_db < x-fab-php-app/setup.sql
+```
+
+#### 4. Chrome拡張機能の更新
+
+1. デプロイ完了後に表示されるCloud RunのURLをコピー
+2. `x-fab-chrome-extension/content.js`のAPI_URLを更新：
+   ```javascript
+   const API_URL = 'https://YOUR-CLOUD-RUN-URL/api/save.php';
+   ```
+3. Chrome拡張機能を再読み込み
+
+### デプロイ後の確認
+
+- アプリケーション: `https://YOUR-CLOUD-RUN-URL`
+- フィード一覧: `https://YOUR-CLOUD-RUN-URL/feeds`
+- APIデバッグ: `https://YOUR-CLOUD-RUN-URL/api/debug.php`
+
+### 料金の目安
+
+- Cloud SQL (db-f1-micro): 約$15/月
+- Cloud Run: リクエスト数に応じて（無料枠あり）
+
+### リソースの削除
+
+使用を終了する場合：
+
+```bash
+# Cloud Runサービスの削除
+gcloud run services delete x-fab-php-app --region=asia-northeast1
+
+# Cloud SQLインスタンスの削除
+gcloud sql instances delete x-fab-db
+```
+
+詳細は[DEPLOY_GUIDE.md](DEPLOY_GUIDE.md)を参照してください。
+
 ## 今後の開発予定
 
-- Cloud Run + Cloud SQLへのデプロイ対応
 - ユーザー認証機能
 - エクスポート機能
 - 統計情報表示

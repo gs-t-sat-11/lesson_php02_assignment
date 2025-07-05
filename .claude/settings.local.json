@@ -6,7 +6,14 @@
       "Bash(chmod:*)",
       "Bash(./deploy_to_xampp.sh:*)",
       "Bash(cp:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(brew install:*)",
+      "Bash(export:*)",
+      "Bash(docker run:*)",
+      "Bash(gcloud logging read:*)",
+      "Bash(grep:*)",
+      "Bash(gcloud run services describe:*)",
+      "Bash(find:*)"
     ],
     "deny": []
   }

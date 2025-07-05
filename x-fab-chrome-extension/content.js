@@ -1,7 +1,7 @@
 // X Feed Saver - Content Script
 
 // APIのURL（本番環境では適切なURLに変更）
-const API_URL = 'http://localhost/x-fab-php-app/api/save.php';
+const API_URL = 'https://x-fab-php-app-riicjqaxya-an.a.run.app/api/save.php';
 
 // 保存ボタンのスタイル
 const buttonStyles = `

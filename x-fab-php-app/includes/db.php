@@ -7,13 +7,23 @@ class Database {
     
     private function __construct() {
         try {
-            // MacのXAMPPの場合、ソケットファイルを明示的に指定
-            if (DB_HOST === 'localhost' && PHP_OS === 'Darwin') {
+            // Cloud SQLの場合
+            if (strpos(DB_HOST, '/cloudsql/') === 0) {
+                $dsn = sprintf(
+                    'mysql:unix_socket=%s;dbname=%s;charset=utf8mb4',
+                    DB_HOST,
+                    DB_NAME
+                );
+            }
+            // MacのXAMPPの場合
+            elseif (DB_HOST === 'localhost' && PHP_OS === 'Darwin') {
                 $dsn = sprintf(
                     'mysql:unix_socket=/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock;dbname=%s;charset=utf8mb4',
                     DB_NAME
                 );
-            } else {
+            }
+            // 通常の接続
+            else {
                 $dsn = sprintf(
                     'mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4',
                     DB_HOST,

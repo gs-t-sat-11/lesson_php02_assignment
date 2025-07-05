@@ -38,6 +38,14 @@ x-fab-chrome-extension/create_icons.php
 
 # デプロイ関連
 deploy_to_xampp.sh
+deploy.sh
+deploy_with_existing_sql.sh
+deploy_cloudrun_only.sh
+x-fab-php-app/deploy-final.sh
+
+# 本番環境設定
+x-fab-chrome-extension/content.prod.js
+x-fab-php-app/.env.production
 
 # XAMPPログ
 /Applications/XAMPP/

@@ -1,0 +1,12 @@
+.env
+.env.local
+*.log
+test_db.php
+check_mysql.php
+clear_cache.php
+deploy_to_xampp.sh
+create_icons.php
+Dockerfile
+.dockerignore
+.git
+.gitignore

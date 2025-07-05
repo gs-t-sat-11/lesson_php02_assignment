@@ -10,7 +10,7 @@ $csrfToken = generateCsrfToken();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="<?php echo $csrfToken; ?>">
     <title>X Feed Viewer - 保存したフィード一覧</title>
-    <link rel="stylesheet" href="/x-fab-php-app/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
     <header class="header">
@@ -46,6 +46,6 @@ $csrfToken = generateCsrfToken();
         </div>
     </main>
 
-    <script src="/x-fab-php-app/assets/js/app.js"></script>
+    <script src="/assets/js/app.js"></script>
 </body>
 </html>

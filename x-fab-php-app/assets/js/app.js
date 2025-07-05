@@ -78,7 +78,7 @@ async function loadFeeds() {
             sort: currentSort
         });
         
-        const response = await fetch(`/x-fab-php-app/api/list.php?${params}`);
+        const response = await fetch(`/api/list.php?${params}`);
         const data = await response.json();
         
         if (data.success) {
@@ -261,7 +261,7 @@ async function deleteFeed(id) {
     
     try {
         const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-        const response = await fetch('/x-fab-php-app/api/delete.php', {
+        const response = await fetch('/api/delete.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

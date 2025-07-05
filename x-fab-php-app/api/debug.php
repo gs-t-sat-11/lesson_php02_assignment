@@ -246,7 +246,7 @@ $csrfToken = generateCsrfToken();
                 return;
             }
             
-            const response = await fetch('/x-fab-php-app/api/save.php', {
+            const response = await fetch('/api/save.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -271,7 +271,7 @@ $csrfToken = generateCsrfToken();
                 sort: formData.get('sort')
             });
             
-            const response = await fetch('/x-fab-php-app/api/list.php?' + params);
+            const response = await fetch('/api/list.php?' + params);
             const result = await response.json();
             
             const responseDiv = document.getElementById('list-response');
@@ -294,7 +294,7 @@ $csrfToken = generateCsrfToken();
                 csrf_token: formData.get('csrf_token')
             };
             
-            const response = await fetch('/x-fab-php-app/api/delete.php', {
+            const response = await fetch('/api/delete.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

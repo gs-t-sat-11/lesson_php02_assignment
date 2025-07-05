@@ -1,0 +1,28 @@
+# ルーティング設定
+RewriteEngine On
+
+# /feedsへのアクセスをindex.phpにリダイレクト
+RewriteRule ^feeds/?$ index.php [L]
+
+# ディレクトリインデックスの設定
+DirectoryIndex index.php
+
+# セキュリティヘッダー
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "DENY"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# .envファイルへのアクセスを禁止
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# PHPの設定（可能な場合）
+<IfModule mod_php.c>
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+    php_value max_execution_time 30
+</IfModule>

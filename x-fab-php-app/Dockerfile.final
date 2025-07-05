@@ -1,0 +1,42 @@
+FROM php:8.2-apache
+
+# Install PDO MySQL extension
+RUN docker-php-ext-install pdo_mysql
+
+# Copy application
+COPY . /var/www/html/
+
+# Remove the ENV PORT line - Cloud Run sets this automatically
+# Configure Apache to listen on $PORT (Cloud Run sets this)
+RUN echo 'Listen ${PORT}' > /etc/apache2/ports.conf && \
+    echo '<VirtualHost *:${PORT}>' > /etc/apache2/sites-available/000-default.conf && \
+    echo '    DocumentRoot /var/www/html' >> /etc/apache2/sites-available/000-default.conf && \
+    echo '    <Directory /var/www/html>' >> /etc/apache2/sites-available/000-default.conf && \
+    echo '        Options Indexes FollowSymLinks' >> /etc/apache2/sites-available/000-default.conf && \
+    echo '        AllowOverride All' >> /etc/apache2/sites-available/000-default.conf && \
+    echo '        Require all granted' >> /etc/apache2/sites-available/000-default.conf && \
+    echo '    </Directory>' >> /etc/apache2/sites-available/000-default.conf && \
+    echo '    ErrorLog ${APACHE_LOG_DIR}/error.log' >> /etc/apache2/sites-available/000-default.conf && \
+    echo '    CustomLog ${APACHE_LOG_DIR}/access.log combined' >> /etc/apache2/sites-available/000-default.conf && \
+    echo '</VirtualHost>' >> /etc/apache2/sites-available/000-default.conf
+
+# Enable mod_rewrite
+RUN a2enmod rewrite headers
+
+# Set ServerName to avoid warning
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html && \
+    chmod -R 755 /var/www/html
+
+# Remove dev files
+RUN rm -f /var/www/html/test_db.php \
+    /var/www/html/check_mysql.php \
+    /var/www/html/clear_cache.php \
+    /var/www/html/test.php \
+    /var/www/html/Dockerfile* \
+    /var/www/html/.dockerignore
+
+# Use the port from Cloud Run environment variable
+CMD ["sh", "-c", "apache2-foreground"]

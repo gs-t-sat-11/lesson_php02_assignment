@@ -1,0 +1,30 @@
+FROM php:8.2-apache
+
+# Install PDO MySQL extension
+RUN docker-php-ext-install pdo_mysql
+
+# Enable Apache modules
+RUN a2enmod rewrite headers
+
+# Copy start script
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
+# Copy application
+COPY . /var/www/html/
+
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html && \
+    chmod -R 755 /var/www/html
+
+# Remove dev files
+RUN rm -f /var/www/html/test_db.php \
+    /var/www/html/check_mysql.php \
+    /var/www/html/clear_cache.php \
+    /var/www/html/test.php \
+    /var/www/html/start.sh \
+    /var/www/html/Dockerfile* \
+    /var/www/html/.dockerignore
+
+# Use start script
+CMD ["/start.sh"]

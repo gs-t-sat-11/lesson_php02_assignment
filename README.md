@@ -143,6 +143,8 @@ lesson_php02_assignment/
 │
 ├── docs/                      # ドキュメント
 ├── deploy_to_xampp.sh         # XAMPP配置スクリプト（Mac用）
+├── deploy_with_existing_sql.sh # Cloud Runデプロイスクリプト
+├── .env.deploy.example        # デプロイ設定テンプレート
 └── README.md                  # このファイル
 ```
 
@@ -186,12 +188,13 @@ lesson_php02_assignment/
 
 #### 削除したファイル：
 - `Dockerfile.cloudrun`, `Dockerfile.final`, `Dockerfile.gcp`, `Dockerfile.production`, `Dockerfile.simple` → `Dockerfile`に統合
-- `deploy.sh`, `deploy_cloudrun_only.sh` → 不要なデプロイスクリプト
 - `x-fab-php-app/deploy-final.sh`, `x-fab-php-app/start.sh` → 不要なスクリプト
 
-#### 残したファイル：
+#### 現在のファイル構成：
 - `x-fab-php-app/Dockerfile` - Cloud Run用の最終的なDockerfile
-- `deploy_with_existing_sql.sh` - 既存のCloud SQLインスタンスを使用するデプロイスクリプト（.gitignoreで管理）
+- `deploy_with_existing_sql.sh` - 既存のCloud SQLインスタンスを使用するデプロイスクリプト
+- `.env.deploy.example` - デプロイ設定のテンプレート
+- `.env.deploy` - 実際のデプロイ設定（.gitignoreで管理）
 
 ## Cloud Run + Cloud SQLへのデプロイ
 
@@ -224,10 +227,13 @@ cp .env.deploy.example .env.deploy
 # 2. .env.deployを編集して実際の値を設定
 #    PROJECT_ID, CLOUD_SQL_INSTANCE, CONNECTION_NAME等を設定
 
-# 3. デプロイスクリプトの実行
-./deploy_with_existing_sql.sh
+# 3. x-fab-php-appディレクトリに移動
+cd x-fab-php-app
 
-# 4. プロンプトに従ってパスワードを入力
+# 4. デプロイスクリプトの実行
+../deploy_with_existing_sql.sh
+
+# 5. プロンプトに従ってパスワードを入力
 ```
 
 新規でセットアップする場合は、[DEPLOY_GUIDE.md](DEPLOY_GUIDE.md)を参照してください。
@@ -250,12 +256,12 @@ mysql -h 127.0.0.1 -P 3307 -u x_fab_user -p x_fab_db < x-fab-php-app/setup.sql
 
 #### 4. Chrome拡張機能の更新
 
-1. デプロイ完了後に表示されるCloud RunのURLをコピー
-2. `x-fab-chrome-extension/content.js`のAPI_URLを更新：
-   ```javascript
-   const API_URL = 'https://YOUR-CLOUD-RUN-URL/api/save.php';
-   ```
-3. Chrome拡張機能を再読み込み
+本番環境用のURLは既に設定済みです：
+- **現在の本番環境URL**: `https://x-fab-php-app-riicjqaxya-an.a.run.app`
+- **content.js**: 本番環境URLが設定されています
+- **content.prod.js**: 本番環境専用の設定ファイル（.gitignoreで管理）
+
+新しいデプロイを行った場合は、表示されたURLでcontent.jsを更新してください。
 
 ### デプロイ後の確認
 

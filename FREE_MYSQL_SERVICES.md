@@ -78,17 +78,14 @@ pscale shell x_fab_db main
 
 ### 2. 接続情報の設定
 
-選んだサービスの接続情報を使って、デプロイスクリプトを実行：
+選んだサービスの接続情報を使う場合、環境変数として設定するか、デプロイ時に直接指定します。
+
+外部MySQLサービスを使用する場合は、Cloud Runの環境変数に接続情報を設定：
 
 ```bash
-./deploy_cloudrun_only.sh YOUR_PROJECT_ID
-
-# プロンプトで以下を入力
-MySQL ホスト名: xxx.ap-northeast-1.psdb.cloud
-MySQL ポート: 3306
-データベース名: x_fab_db
-ユーザー名: your_username
-パスワード: your_password
+gcloud run services update x-fab-php-app \
+  --region=asia-northeast1 \
+  --update-env-vars="DB_HOST=xxx.ap-northeast-1.psdb.cloud,DB_PORT=3306,DB_NAME=x_fab_db,DB_USER=your_username,DB_PASS=your_password,ENV=production"
 ```
 
 ## SSL接続の対応

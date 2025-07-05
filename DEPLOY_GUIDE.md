@@ -24,33 +24,39 @@ brew install --cask google-cloud-sdk
 gcloud auth login
 ```
 
-### 3. デプロイスクリプトの実行
+### 3. デプロイ手順
+
+#### 新規デプロイの場合
+
+新規のCloud SQLインスタンスを作成する場合は、適切なスクリプトを作成するか、手動でセットアップしてください。
+
+#### 既存のCloud SQLインスタンスを使用する場合
 
 ```bash
-# プロジェクトIDを指定して実行
-./deploy.sh YOUR_PROJECT_ID
+# 1. 環境変数ファイルの準備
+cp .env.deploy.example .env.deploy
+
+# 2. .env.deployを編集して実際の値を設定
+# PROJECT_ID, CLOUD_SQL_INSTANCE, CONNECTION_NAME等
+
+# 3. x-fab-php-appディレクトリに移動
+cd x-fab-php-app
+
+# 4. デプロイスクリプトの実行
+../deploy_with_existing_sql.sh
 ```
 
 スクリプトが以下を自動的に実行します：
 - 必要なAPIの有効化
-- Cloud SQLインスタンスの作成
 - データベースとユーザーの作成
+- Cloud Buildを使用したイメージのビルド
 - Cloud Runへのデプロイ
 
 ### 4. データベーステーブルの作成
 
-別のターミナルでCloud SQL Proxyを起動：
+`deploy_with_existing_sql.sh`を使用する場合、スクリプトがCloud SQL Proxyのダウンロードと起動を自動的に行います。
 
-```bash
-# Cloud SQL Proxyのダウンロード（初回のみ）
-curl -o cloud_sql_proxy https://dl.google.com/cloudsql/cloud_sql_proxy.darwin.amd64
-chmod +x cloud_sql_proxy
-
-# Proxyの起動
-./cloud_sql_proxy -instances=YOUR_CONNECTION_NAME=tcp:3307
-```
-
-別のターミナルでSQLを実行：
+手動で実行する場合：
 
 ```bash
 # setup.sqlの実行
@@ -59,6 +65,10 @@ mysql -h 127.0.0.1 -P 3307 -u x_fab_user -p x_fab_db < x-fab-php-app/setup.sql
 
 ### 5. Chrome拡張機能の更新
 
+本番環境用のURLは既に設定済みの場合があります：
+- **現在の本番環境URL**: `https://x-fab-php-app-riicjqaxya-an.a.run.app`
+
+新しいデプロイを行った場合：
 1. `x-fab-chrome-extension/content.js`を開く
 2. API_URLを更新：
    ```javascript
@@ -86,6 +96,11 @@ gcloud run services update x-fab-php-app \
 cd x-fab-php-app
 cp .env.example .env
 # .envファイルを編集
+```
+
+Chrome拡張機能のAPI URLもローカルに戻す：
+```javascript
+const API_URL = 'http://localhost/x-fab-php-app/api/save.php';
 ```
 
 ## トラブルシューティング

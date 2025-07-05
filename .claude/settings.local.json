@@ -13,7 +13,12 @@
       "Bash(gcloud logging read:*)",
       "Bash(grep:*)",
       "Bash(gcloud run services describe:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(cat:*)",
+      "Bash(rm:*)",
+      "Bash(mv:*)",
+      "Bash(ls:*)",
+      "Bash(true)"
     ],
     "deny": []
   }

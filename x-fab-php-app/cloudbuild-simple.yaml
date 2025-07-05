@@ -1,7 +1,7 @@
 steps:
   # Dockerイメージのビルド（Cloud Build上でx86_64アーキテクチャとしてビルド）
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-f', 'Dockerfile.working', '-t', 'gcr.io/$PROJECT_ID/x-fab-php-app', '.']
+    args: ['build', '-f', 'Dockerfile', '-t', 'gcr.io/$PROJECT_ID/x-fab-php-app', '.']
   
   # イメージをプッシュ
   - name: 'gcr.io/cloud-builders/docker'

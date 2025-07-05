@@ -178,6 +178,21 @@ lesson_php02_assignment/
 - ブラウザの開発者ツールでネットワークエラーを確認
 - PHPのエラーログを確認
 
+## ファイル整理について
+
+### デプロイ関連ファイル
+
+本プロジェクトでは、Cloud Runへのデプロイ過程で複数の試行錯誤を行いました。最終的に使用するファイルのみを残し、以下のファイルを整理しました：
+
+#### 削除したファイル：
+- `Dockerfile.cloudrun`, `Dockerfile.final`, `Dockerfile.gcp`, `Dockerfile.production`, `Dockerfile.simple` → `Dockerfile`に統合
+- `deploy.sh`, `deploy_cloudrun_only.sh` → 不要なデプロイスクリプト
+- `x-fab-php-app/deploy-final.sh`, `x-fab-php-app/start.sh` → 不要なスクリプト
+
+#### 残したファイル：
+- `x-fab-php-app/Dockerfile` - Cloud Run用の最終的なDockerfile
+- `deploy_with_existing_sql.sh` - 既存のCloud SQLインスタンスを使用するデプロイスクリプト（.gitignoreで管理）
+
 ## Cloud Run + Cloud SQLへのデプロイ
 
 ### 前提条件
@@ -198,14 +213,10 @@ brew install --cask google-cloud-sdk
 gcloud auth login
 ```
 
-#### 2. デプロイスクリプトの実行
+#### 2. デプロイ手順
 
-```bash
-# プロジェクトIDを指定して実行
-./deploy.sh YOUR_PROJECT_ID
-
-# パスワードを聞かれたら、安全なパスワードを入力
-```
+既存のCloud SQLインスタンスがある場合は、`deploy_with_existing_sql.sh`を使用します。
+新規でセットアップする場合は、[DEPLOY_GUIDE.md](DEPLOY_GUIDE.md)を参照してください。
 
 #### 3. データベーステーブルの作成
 

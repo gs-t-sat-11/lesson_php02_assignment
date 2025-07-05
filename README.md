@@ -215,7 +215,21 @@ gcloud auth login
 
 #### 2. デプロイ手順
 
-既存のCloud SQLインスタンスがある場合は、`deploy_with_existing_sql.sh`を使用します。
+##### 既存のCloud SQLインスタンスを使用する場合
+
+```bash
+# 1. 環境変数ファイルの準備
+cp .env.deploy.example .env.deploy
+
+# 2. .env.deployを編集して実際の値を設定
+#    PROJECT_ID, CLOUD_SQL_INSTANCE, CONNECTION_NAME等を設定
+
+# 3. デプロイスクリプトの実行
+./deploy_with_existing_sql.sh
+
+# 4. プロンプトに従ってパスワードを入力
+```
+
 新規でセットアップする場合は、[DEPLOY_GUIDE.md](DEPLOY_GUIDE.md)を参照してください。
 
 #### 3. データベーステーブルの作成

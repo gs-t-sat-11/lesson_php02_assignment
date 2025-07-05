@@ -13,6 +13,7 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
+.env.deploy
 
 # ログファイル
 *.log
@@ -39,7 +40,6 @@ x-fab-chrome-extension/create_icons.php
 # デプロイ関連
 deploy_to_xampp.sh
 deploy.sh
-deploy_with_existing_sql.sh
 deploy_cloudrun_only.sh
 x-fab-php-app/deploy-final.sh
 
